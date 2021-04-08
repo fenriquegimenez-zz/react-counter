@@ -1,24 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+
+import Counter from "./components/Counter";
+import UserInput from "./components/UserInput";
+import Title from "./components/Title";
 
 function App() {
+  const [count, setCount] = useState(0);
+  const [input, setInput] = useState(0);
+
+  function handleAddition() {
+    setCount(prevCount => prevCount + parseInt(input));
+  }
+  function handleDecrement() {
+    setCount(prevCount => prevCount - input);
+  }
+  function handleReset(event) {
+    event.preventDefault();
+    setCount(0);
+    setInput(0);
+  }
+  function handleInputChange(event) {
+    setInput(event.target.value);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Title />
+      <UserInput onInputChange={handleInputChange} />
+      <Counter
+        input={input}
+        count={count}
+        onResetClick={handleReset}
+        onDecClick={handleDecrement}
+        onAddClick={handleAddition}
+      />
+    </>
   );
 }
 
